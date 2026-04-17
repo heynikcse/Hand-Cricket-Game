@@ -1,0 +1,78 @@
+body {
+    background-color: #1a1a2e;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.game-container {
+    background: #16213e;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    width: 350px;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.score-box {
+    background: #0f3460;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.play-area {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.hand {
+    font-size: 4rem;
+    transition: transform 0.2s;
+}
+
+/* The Shake Animation */
+.shake {
+    animation: shakeHand 0.5s ease-in-out;
+}
+
+@keyframes shakeHand {
+    0% { transform: translateY(0); }
+    25% { transform: translateY(-20px); }
+    50% { transform: translateY(0); }
+    75% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+}
+
+.controls button {
+    background: #e94560;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.controls button:hover { background: #ff4d6d; }
+
+#reset-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #00d2d3;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

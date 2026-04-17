@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Cricket Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>🏏 Hand Cricket</h1>
+        <div class="status-bar">
+            <span id="game-status">You are Batting</span>
+        </div>
+
+        <div class="scoreboard">
+            <div class="score-box">Score: <span id="user-score">0</span></div>
+            <div class="score-box">Target: <span id="target">-</span></div>
+        </div>
+
+        <div class="play-area">
+            <div class="hand-box">
+                <p>BOT</p>
+                <div id="bot-hand" class="hand">✊</div>
+                <div id="bot-move" class="move-val">?</div>
+            </div>
+            <div class="hand-box">
+                <p>YOU</p>
+                <div id="user-hand" class="hand">✊</div>
+                <div id="user-move" class="move-val">?</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button onclick="playRound(0)">0</button>
+            <button onclick="playRound(1)">1</button>
+            <button onclick="playRound(2)">2</button>
+            <button onclick="playRound(3)">3</button>
+            <button onclick="playRound(4)">4</button>
+            <button onclick="playRound(5)">5</button>
+            <button onclick="playRound(6)">6</button>
+        </div>
+        
+        <button id="reset-btn" onclick="resetGame()" style="display:none;">Play Again</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
