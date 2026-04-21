@@ -35,6 +35,8 @@ body {
   color: #9aa6b2;
   text-align: center;
   opacity: 0.8;
+  font-weight: 500;          
+  letter-spacing: 0.5px;     
 }
 
 .footer-text span {
