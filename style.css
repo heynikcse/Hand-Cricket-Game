@@ -28,6 +28,20 @@ body {
   animation: fadeIn 0.3s ease;
 }
 
+/* - FOOTER- */
+.footer-text {
+  margin-top: 20px;
+  font-size: 0.85rem;
+  color: #9aa6b2;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.footer-text span {
+  color: #e94560;
+}
+
+
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
