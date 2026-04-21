@@ -1,48 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hand Cricket Pro</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hand Cricket — Multiplayer</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <!-- ══════════ LOBBY SCREEN ══════════ -->
+  <div id="screen-lobby" class="screen active">
     <div class="game-container">
-        <h1>🏏 Hand Cricket</h1>
-        <div class="status-bar">
-            <span id="game-status">You are Batting</span>
-        </div>
+      <h1>🏏 Hand Cricket</h1>
+      <p class="subtitle">Real-time multiplayer</p>
 
-        <div class="scoreboard">
-            <div class="score-box">Score: <span id="user-score">0</span></div>
-            <div class="score-box">Target: <span id="target">-</span></div>
-        </div>
+      <div class="lobby-section">
+        <input id="player-name" type="text" placeholder="Enter your name" maxlength="16" />
+      </div>
 
-        <div class="play-area">
-            <div class="hand-box">
-                <p>BOT</p>
-                <div id="bot-hand" class="hand">✊</div>
-                <div id="bot-move" class="move-val">?</div>
-            </div>
-            <div class="hand-box">
-                <p>YOU</p>
-                <div id="user-hand" class="hand">✊</div>
-                <div id="user-move" class="move-val">?</div>
-            </div>
-        </div>
+      <div class="lobby-section">
+        <button class="btn btn-primary" onclick="createRoom()">Create Room</button>
+        <div class="divider">— or join a room —</div>
+        <input id="room-code-input" type="text" placeholder="Enter room code" maxlength="6" />
+        <button class="btn btn-secondary" onclick="joinRoom()">Join Room</button>
+      </div>
 
-        <div class="controls">
-            <button onclick="playRound(0)">0</button>
-            <button onclick="playRound(1)">1</button>
-            <button onclick="playRound(2)">2</button>
-            <button onclick="playRound(3)">3</button>
-            <button onclick="playRound(4)">4</button>
-            <button onclick="playRound(5)">5</button>
-            <button onclick="playRound(6)">6</button>
-        </div>
-        
-        <button id="reset-btn" onclick="resetGame()" style="display:none;">Play Again</button>
+      <div id="lobby-status" class="status-msg"></div>
     </div>
-    <script src="script.js"></script>
+  </div>
+
+  <!-- ══════════ WAITING SCREEN ══════════ -->
+  <div id="screen-waiting" class="screen">
+    <div class="game-container">
+      <h1>🏏 Hand Cricket</h1>
+      <p class="subtitle">Waiting for opponent...</p>
+      <div class="room-display">
+        Room Code
+        <span id="room-code-display" class="room-code">——</span>
+      </div>
+      <button class="btn btn-copy" onclick="copyCode()">📋 Copy Code</button>
+      <div id="waiting-status" class="status-msg">Share this code with your friend</div>
+    </div>
+  </div>
+
+  <!-- ══════════ TOSS SCREEN ══════════ -->
+  <div id="screen-toss" class="screen">
+    <div class="game-container">
+      <h1>🏏 The Toss</h1>
+      <p class="subtitle">Pick a number (0–6).<br>Even sum = you win · Odd sum = opponent wins.</p>
+
+      <div class="controls" id="toss-controls">
+        <button onclick="tossPick(0)">0</button>
+        <button onclick="tossPick(1)">1</button>
+        <button onclick="tossPick(2)">2</button>
+        <button onclick="tossPick(3)">3</button>
+        <button onclick="tossPick(4)">4</button>
+        <button onclick="tossPick(5)">5</button>
+        <button onclick="tossPick(6)">6</button>
+      </div>
+
+      <div id="toss-waiting-msg" class="status-msg" style="display:none;">
+        ⏳ Waiting for opponent's pick...
+      </div>
+
+      <div id="toss-result" style="display:none;">
+        <p id="toss-result-text" class="toss-result-text"></p>
+
+        <div id="toss-choice" style="display:none;">
+          <p class="hint" style="margin-bottom:8px;">You won! Choose your role:</p>
+          <button class="btn btn-primary" onclick="tossChoice('bat')">🏏 Bat First</button>
+          <button class="btn btn-secondary" onclick="tossChoice('bowl')">⚾ Bowl First</button>
+        </div>
+
+        <p id="toss-wait-choice" class="status-msg" style="display:none;">
+          Opponent is choosing...
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ GAME SCREEN ══════════ -->
+  <div id="screen-game" class="screen">
+    <div class="game-container">
+
+      <div class="top-bar">
+        <span id="game-innings-label" class="innings-badge">1st Innings</span>
+        <span id="game-status" class="status-inline">You are Batting 🏏</span>
+      </div>
+
+      <div class="scoreboard">
+        <div class="score-box">
+          <div class="score-label" id="score-label-you">You</div>
+          <div class="score-value" id="user-score">0</div>
+        </div>
+        <div class="score-box target-box">
+          <div class="score-label">Target</div>
+          <div class="score-value" id="target">—</div>
+        </div>
+        <div class="score-box">
+          <div class="score-label" id="score-label-opp">Opponent</div>
+          <div class="score-value" id="opp-score">0</div>
+        </div>
+      </div>
+
+      <div id="chase-bar-wrap" class="chase-bar-wrap" style="display:none;">
+        <div class="chase-bar-bg">
+          <div id="chase-bar-fill" class="chase-bar-fill" style="width:0%"></div>
+        </div>
+        <span id="chase-bar-label" class="chase-bar-label"></span>
+      </div>
+
+      <div class="play-area">
+        <div class="hand-box">
+          <p id="opp-name-label">Opponent</p>
+          <div id="bot-hand" class="hand">✊</div>
+          <div id="bot-move" class="move-val">?</div>
+        </div>
+        <div class="vs-label">VS</div>
+        <div class="hand-box">
+          <p id="score-label-you-hand">You</p>
+          <div id="user-hand" class="hand">✊</div>
+          <div id="user-move" class="move-val">?</div>
+        </div>
+      </div>
+
+      <div id="round-result" class="round-result"></div>
+
+      <div class="ball-log-wrap">
+        <div class="ball-log-title">This innings</div>
+        <div id="ball-log" class="ball-log"></div>
+      </div>
+
+      <div class="controls" id="game-controls">
+        <button onclick="playRound(0)">0</button>
+        <button onclick="playRound(1)">1</button>
+        <button onclick="playRound(2)">2</button>
+        <button onclick="playRound(3)">3</button>
+        <button onclick="playRound(4)">4</button>
+        <button onclick="playRound(5)">5</button>
+        <button onclick="playRound(6)">6</button>
+      </div>
+
+      <div id="waiting-move-msg" class="status-msg" style="display:none;">
+        ⏳ Waiting for opponent's move...
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ RESULT SCREEN ══════════ -->
+  <div id="screen-result" class="screen">
+    <div class="game-container">
+      <div id="result-icon" class="result-icon">🏆</div>
+      <h1 id="result-title">Match Over</h1>
+      <p id="result-subtitle" class="subtitle"></p>
+
+      <div class="final-scores">
+        <div class="score-box">
+          <div class="score-label">You</div>
+          <div class="score-value" id="final-you">0</div>
+        </div>
+        <div class="score-box">
+          <div class="score-label">Opponent</div>
+          <div class="score-value" id="final-opp">0</div>
+        </div>
+      </div>
+
+      <div id="final-stats" class="final-stats"></div>
+      <div id="rematch-status" class="status-msg"></div>
+
+      <button class="btn btn-primary" onclick="playAgain()">Play Again</button>
+      <button class="btn btn-secondary" onclick="goLobby()">Back to Lobby</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
