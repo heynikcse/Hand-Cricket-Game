@@ -93,10 +93,11 @@ function copyCode() {
 // ═══════════════════════════════════════════
 //  TOSS
 // ═══════════════════════════════════════════
+
 function tossPick(v) {
   if (myTossMove !== null) return;
-  myTossMove = v;
   disableControls("toss-controls");
+  myTossMove = v;
   document.getElementById("toss-waiting-msg").style.display = "block";
   socket.emit("tossPick", { roomCode, move: v });
 }
@@ -255,9 +256,9 @@ socket.on("roundResult", ({ moves, batter, runs, isOut, scores, targetVal }) => 
   myMove = null;
   document.getElementById("waiting-move-msg").style.display = "none";
 
-  const myMoveVal = moves[socket.id];
+  const myMoveVal = moves[socket.id] ?? 0;
   const oppKey = Object.keys(moves).find(k => k !== socket.id);
-  const oppMoveVal = oppKey ? moves[oppKey] : undefined;
+  const oppMoveVal = oppKey ? (moves[oppKey] ?? 0) : 0;
 
   const userHand = document.getElementById("user-hand");
   const botHand = document.getElementById("bot-hand");
