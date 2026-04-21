@@ -143,16 +143,6 @@ const PORT = process.env.PORT || 3000;
 
 ---
 
-## 🌟 Future Improvements
-
-* 🤖 Single-player (Bot mode)
-* 🔊 Sound effects (bat hit, crowd, out)
-* 🏆 Leaderboard system
-* 🎯 Match history
-* 🎨 Advanced UI (game-style animations)
-
----
-
 ## 👨‍💻 Author
 
 **Nikhil Raj**
