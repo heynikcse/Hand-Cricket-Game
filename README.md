@@ -1,9 +1,3 @@
-Got you bro 😄🔥 — here’s a **clean, professional, portfolio-ready README** updated for your **multiplayer Socket.IO version + deployment**
-
-You can directly copy-paste this into your GitHub `README.md` 👇
-
----
-
 # 🏏 Hand Cricket — Multiplayer
 
 A real-time multiplayer implementation of the classic **Hand Cricket** game built using **Node.js, Socket.IO, and Vanilla JavaScript**. Play with your friends online with smooth animations, live score updates, and an interactive UI.
