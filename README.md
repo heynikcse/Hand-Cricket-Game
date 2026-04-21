@@ -6,8 +6,7 @@ A real-time multiplayer implementation of the classic **Hand Cricket** game buil
 
 ## 🚀 Live Demo
 
-🌐 [https://your-render-link.onrender.com](https://your-render-link.onrender.com)
-*(replace with your actual Render link)*
+🌐 https://hand-cricket-uf28.onrender.com
 
 ---
 
